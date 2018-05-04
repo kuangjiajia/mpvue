@@ -1,10 +1,12 @@
 import Router from 'koa-router'
 import { controller } from '../controller'
 
-const router = new Router()
+const router = new Router({
+	  prefix: '/wxTest'
+})
 
 export default app => {
-    router.get("/index",controller.index)
+    router.get("/home",controller.home)
           .get("/wechat",controller.wechat)
 
     app.use(router.routes())
