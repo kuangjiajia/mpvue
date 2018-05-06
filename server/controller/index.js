@@ -2,7 +2,9 @@ import sha1 from 'sha1'
 import url from 'url'
 import http from 'http'
 import school from '../public/school.json'
-// import validateWechat from '../config/wechat.js'
+import { getTokenUri } from '../config/wechat.js'
+import request from 'request'
+import rp from 'request-promise'
 
 export const controller = {
     home: async (ctx,next) => {
@@ -21,10 +23,14 @@ export const controller = {
 	    const original = newArr.sort().join('')
 	    const shaStr = sha1(original)
 	    if(shaStr === signature) {
-	    	console.log("success")
-	        ctx.body = ctx.query.echostr
+	        ctx.body = "success"
 	    }else {
 	        ctx.body = { code: -1, msg: "fail"}
 	    } 
-	}
+    },
+    getToken: async (ctx,next) => {
+	console.log(getTokenUri)
+	const data = await rp(getTokenUri)
+	ctx.body = JSON.stringify(data)
+    }
 }
