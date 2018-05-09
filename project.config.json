@@ -10,7 +10,7 @@
 	"miniprogramRoot": "./dist/",
 	"compileType": "miniprogram",
 	"appid": "wxd776e49773c3f300",
-	"projectname": "book-sale",
+	"projectname": "demo",
 	"condition": {
 		"search": {
 			"current": -1,

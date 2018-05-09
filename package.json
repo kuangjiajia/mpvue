@@ -9,9 +9,12 @@
     "start": "node build/dev-server.js",
     "build": "rimraf dist && node build/build.js",
     "lint": "eslint --ext .js,.vue src",
-    "server": "NODE_ENV=test nodemon --exec babel-node server/app.js"
+    "server": "NODE_ENV=test nodemon --exec babel-node server/app.js",
+    "wechat": "babel-node server/app.js"
   },
   "dependencies": {
+    "co-wechat": "^2.3.0",
+    "co-wechat-oauth": "^2.0.1",
     "koa": "^2.5.1",
     "koa-bodyparser": "^4.2.0",
     "koa-router": "^7.4.0",
