@@ -13,9 +13,9 @@ export default app => {
     
     // app.use(token())
     
-    reply(app)
-    // app.use(koaStaticServer({
-    //     rootDir: "/usr/wxNode/mpvue/server/public",
-    //     rootPath: '/wxTest'
-    // }))
+    // reply(app)
+    app.use(koaStaticServer({
+        rootDir: "/usr/wxNode/mpvue/server/public",
+        rootPath: '/wx'
+    }))
 }

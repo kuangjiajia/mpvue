@@ -2,7 +2,7 @@ import Router from 'koa-router'
 import { controller } from '../controller'
 
 const router = new Router({
-	  prefix: '/wxTest'
+	  prefix: '/wx'
 })
 
 export default app => {
