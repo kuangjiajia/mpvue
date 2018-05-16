@@ -1,54 +1,59 @@
 <template lang="pug">
-  div.container(@click='clickHandle("test click", $event)')
-    div.userinfo(@click='bindViewTap')
-      img.userinfo-avatar(v-if='userInfo.avatarUrl' :src='userInfo.avatarUrl' background-size='cover')
-      div.userinfo-nickname
-        card(:text='userInfo.nickName')
-    div.usermotto
-      div.user-motto
-        card(:text='motto')
-    form.form-container
-      input.form-control(type='text' v-modle='motto' placeholder='v-modle')
-      input.form-control(type='text' v-modle.lazy='motto' placeholder='v-modle.lazy')
-    a.counter(href='/pages/counter/main') 去往Vuex示例页面
-
+  .containers
+    .school-area-input
+      .school-area
+        i
+      .area-input
+    ul.book-type 
+      li 1
+      li 2
+      li 3
+      li 4
+      li 5
+      li 6
+    .choose-scope
+      .one-school
+      .all-school
     
 </template>
 
+<style lang="stylus" scoped>
+  .containers   
+    width 100vw
+    height 100vh
+    background-color #1e2a3c
+    .school-area-input 
+      width 100vw
+      height 4vh
+      background-color red
+      .school-area 
+        width 4vw
+        height 4vw
+        background url('../../static/img/area.png')
+        background-size 100% 100%
+
+      
+</style>
+
+
+
 
 <script>
-import card from '@/components/card'
-
 export default {
   data () {
     return {
-      motto: 'Hello World',
       userInfo: {}
     }
   },
-
   components: {
-    card
   },
-
   methods: {
     bindViewTap () {
       const url = '../logs/main'
       wx.navigateTo({ url })
     },
-    getUserInfo () {
-      // 调用登录接口
-      wx.login({
-        success: () => {
-          wx.getUserInfo({
-            success: (res) => {
-              this.userInfo = res.userInfo
-              console.log(res)
-              console.log(res.userInfo)
-            }
-          })
-        }
-      })
+    getHaha () {
+      console.log(123)
     },
     clickHandle (msg, ev) {
       console.log('clickHandle:', msg, ev)
@@ -57,44 +62,6 @@ export default {
 
   created () {
     // 调用应用实例的方法获取全局数据
-    this.getUserInfo()
   }
 }
 </script>
-<style lang="stylus">
-.userinfo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
-}
-
-.userinfo-nickname {
-  color: #aaa;
-}
-
-.usermotto {
-  margin-top: 150px;
-}
-
-.form-control {
-  display: block;
-  padding: 0 12px;
-  margin-bottom: 5px;
-  border: 1px solid #ccc;
-}
-
-.counter {
-  display: inline-block;
-  margin: 10px auto;
-  padding: 5px 10px;
-  color: blue;
-  border: 1px solid blue;
-} 
-</style>
