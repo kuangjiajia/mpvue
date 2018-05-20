@@ -4,7 +4,7 @@
     img.user-avatar(v-if='userInfo.avatarUrl' :src='userInfo.avatarUrl')
     .card-input
       i
-      input.school(type='text' placeholder="学校名称") 
+      input.school(type='text' placeholder="用户名称") 
       button(@click='getHaha') 注册
     
 </template>
@@ -103,7 +103,7 @@ export default {
 
   created () {
     // 调用应用实例的方法获取全局数据
-    this.getUserInfo()
+    // this.getUserInfo()
   }
 }
 </script>

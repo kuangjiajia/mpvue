@@ -1,67 +1,48 @@
 <template lang="pug">
   .containers
-    .school-area-input
-      .school-area
-        i
-      .area-input
-    ul.book-type 
-      li 1
-      li 2
-      li 3
-      li 4
-      li 5
-      li 6
-    .choose-scope
-      .one-school
-      .all-school
-    
+    h1.city 重庆市
+    h2.weather 多云
+    h1.temperature 23°
+    ul.date
+      li(v-for="(day,index) in dayList" :key="day.date")
+        span {{day.date }}
+        img(v-bind:src="day.weather")
+        span {{day.temprature + '°'}}
+    .echarts
+      //- echartsDemo
+    ul.day-do
+      todoList
 </template>
 
-<style lang="stylus" scoped>
-  .containers   
-    width 100vw
-    height 100vh
-    background-color #1e2a3c
-    .school-area-input 
-      width 100vw
-      height 4vh
-      background-color red
-      .school-area 
-        width 4vw
-        height 4vw
-        background url('../../static/img/area.png')
-        background-size 100% 100%
-
-      
-</style>
-
-
-
-
 <script>
+import '../../static/stylus/index.styl'
+import todo from '../../components/todo.vue'
+import todoList from '../../components/todoList.vue'
+import {dayList, itemList} from '../../config/index.js'
+// import echartsDemo from '../../components/echarts.vue'
+
 export default {
   data () {
     return {
-      userInfo: {}
+      dayList,
+      itemList
     }
   },
   components: {
+    todo,
+    // echartsDemo,
+    todoList
   },
   methods: {
-    bindViewTap () {
-      const url = '../logs/main'
-      wx.navigateTo({ url })
-    },
-    getHaha () {
-      console.log(123)
-    },
-    clickHandle (msg, ev) {
-      console.log('clickHandle:', msg, ev)
+    todoClick() {
+
     }
   },
 
   created () {
     // 调用应用实例的方法获取全局数据
+  },
+  mounted () {
   }
 }
 </script>
