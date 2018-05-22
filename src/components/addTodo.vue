@@ -3,11 +3,8 @@
   textarea(cols="10" rows="10" placeholder="您想做什么" fixed=true)
   i.del
   i.choose
-  .choose-time
-    .hour-item.time-item
-    .minute-item.time-item
-    picker(@change="bindPickerChange" :value="index" :range="array")
-      view.picker 当前选择：{{array[index]}}
+  picker(@change="bindPickerChange" mode="time" :value="index" :range="array")
+    view.picker 选择时间：{{publishTime}}
 </template>
 <style lang="stylus" scoped>
   .add-todo 
@@ -25,12 +22,12 @@
     border-radius 3vw
     textarea 
       width 70vw
-      height 60vh
+      height 45vh
       background-color #fff
       font-size 18px
     i.del 
       position absolute
-      right 3 vw
+      right 3vw
       top 2vh
       width 8vw
       height 8vw
@@ -39,23 +36,11 @@
     i.choose 
       position absolute
       right 34vw
-      bottom -8vw
-      width 16vw
-      height 16vw
+      bottom 2vw
+      width 10vw
+      height 10vw
       background url("../static/img/true.png")
       background-size 100% 100%
-    .choose-time
-      position absolute 
-      bottom 5vh
-      left 5vw
-      display flex 
-      flex-flow wrap row
-      width 70vw
-      height 7vh
-      .time-item 
-        width 34vw
-        height 100%
-        border 1px solid black
         
 
 </style>
@@ -64,16 +49,16 @@
   data () {
     return {
       index: 0,
-      array: ['A', 'B', 'C']
+      publishTime: 0
     }
   },
   methods: {
     bindPickerChange (e) {
-      console.log(e)
+      this.publishTime = e.target.value
     }
   },
-    mounted() {
-      document.addEventListener("touchmove",e => e.preventDefault() , false)
-    }
+  mounted() {
+
+  }
   }
 </script>

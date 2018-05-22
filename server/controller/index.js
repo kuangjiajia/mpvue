@@ -1,11 +1,24 @@
-import sha1 from 'sha1'
-import school from '../public/school.json'
+import rp from 'request-promise'
 
-export const controller = {
-    home: async (ctx,next) => {
-        ctx.response.type = "application/json"
-        ctx.body = JSON.stringify(school)
-        console.log(123)
-    }, 
 
+import mongoose from '../mongo'
+import { formatUrl } from '../config'
+import { client , randomStr } from '../redis'
+
+export default {
+    login: async (ctx,next) => {
+        const { code } = ctx.query
+        const getCodeUrl = formatUrl(code)
+        const data = await rp(getCodeUrl)
+        const str = randomStr(50)
+        client.hmset(str,JSON.parse(data),(err) => {
+            if(err) console.log(err)
+            else console.log("success")            
+        })
+        ctx.set("authtoken",str)
+        ctx.body = {
+            status: 200
+        }
+        ctx.status = 200
+    }
 }

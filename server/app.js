@@ -2,7 +2,7 @@ import Koa from 'koa'
 import path from 'path'
 
 
-import { PORT } from './config/utils.js'
+import { PORT } from './config/index.js'
 import router from './router'
 import middleware from './middleware'
 

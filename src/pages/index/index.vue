@@ -9,9 +9,10 @@
         img(v-bind:src="day.weather")
         span {{day.temprature + '°'}}
     .echarts
-      //- echartsDemo
+      echartsDemo
     ul.day-do
       todoList
+      //- note
 </template>
 
 <script>
@@ -19,7 +20,8 @@ import '../../static/stylus/index.styl'
 import todo from '../../components/todo.vue'
 import todoList from '../../components/todoList.vue'
 import {dayList, itemList} from '../../config/index.js'
-// import echartsDemo from '../../components/echarts.vue'
+import echartsDemo from '../../components/echarts.vue'
+import note from '../../components/note.vue'
 
 export default {
   data () {
@@ -30,8 +32,9 @@ export default {
   },
   components: {
     todo,
-    // echartsDemo,
-    todoList
+    echartsDemo,
+    todoList,
+    note
   },
   methods: {
     todoClick() {

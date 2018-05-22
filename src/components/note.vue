@@ -1,32 +1,13 @@
 <template lang="pug">
     li(@click="todoClick" v-bind:class="[isActive ? 'clickTodo' : 'todolist']")
-      h3 {{todoListData.title}}
+      h3 随笔
       ul.content
-        h2 
-          span Today
-          i 
-        li(v-for="(itemTip,index1) in todoListData.todo")
-          i 
-          span {{itemTip}}
-      ul.content
-        h2 
-          span Tomorrow
-          i
-        li(v-for="(itemTip,index1) in todoListData.todo")
-          i 
-          span {{itemTip}}
-      ul.content
-        h2 
-          span Later
-          i
         li(v-for="(itemTip,index1) in todoListData.todo")
           i 
           span {{itemTip}}
       i.add-icon
       i.close-icon
-      //- addTodo
-      //- oneDay
-
+    //-   writeNote
 </template>
 
 <style lang="stylus" scoped>
@@ -87,19 +68,6 @@ li
         height 4.5vh
         font-size 16px
         border-bottom 1px solid rgba(0,0,0,.1)
-    h2
-      height 4vh 
-      i 
-        float right 
-        width 3vh
-        height 3vh
-        margin-right 5vw
-        background url("../static/img/more.png")
-        background-size 100% 100%
-      span 
-        float left
-        width 20vw 
-        height 100%
   i.close-icon 
       position absolute 
       top 1vh
@@ -113,12 +81,13 @@ li
 <script>
 import addTodo from './addTodo.vue'
 import oneDay from './oneDay.vue'
+import writeNote from './writeNote.vue'
 import {itemList} from '../config/index.js'
 export default {
   data() {
     return {
       todoListData: itemList[0],
-      isActive: false
+      isActive: true
     }
   },
   methods: {
@@ -128,8 +97,7 @@ export default {
     // }
   },
   components: {
-    addTodo,
-    oneDay
+    writeNote
   },
   mounted() {
   }

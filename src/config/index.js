@@ -54,3 +54,18 @@ export const itemList = [
 	}
 ]
 
+export const noteBook = [
+  {
+    title: '我爱你',
+    content: "那死的哈是的话i啊是的"
+  },
+  {
+    title: '我恨你',
+    content: "那死的哈是的话i啊是的"
+  },
+  {
+    title: '我回家啊啊哈哈',
+    content: "那死的哈是的话i啊是的"
+  },
+]
+

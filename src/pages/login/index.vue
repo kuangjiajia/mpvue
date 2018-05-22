@@ -64,7 +64,7 @@
 
 <script>
 import card from '@/components/card'
-
+import API from '../../api'
 export default {
   data () {
     return {
@@ -84,17 +84,9 @@ export default {
     getHaha () {
       console.log(123)
     },
-    getUserInfo () {
-      // 调用登录接口
-      wx.login({
-        success: () => {
-          wx.getUserInfo({
-            success: (res) => {
-              this.userInfo = res.userInfo
-            }
-          })
-        }
-      })
+    async getUserInfo () {
+      const userInfo = await API.getUserInfo()
+      console.log(userInfo)
     },
     clickHandle (msg, ev) {
       console.log('clickHandle:', msg, ev)
@@ -103,7 +95,7 @@ export default {
 
   created () {
     // 调用应用实例的方法获取全局数据
-    // this.getUserInfo()
+    this.getUserInfo()
   }
 }
 </script>
