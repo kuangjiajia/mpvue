@@ -6,7 +6,8 @@
       i
       input.school(type='text' placeholder="用户名称") 
       button(@click='getHaha') 注册
-    
+      button(open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo") 授权登录
+
 </template>
 
 <style lang="stylus" scoped>
@@ -52,11 +53,7 @@
       border none
       outline none
       text-align center
-      color grey
-
-
-
-      
+      color grey   
 </style>
 
 
@@ -86,16 +83,20 @@ export default {
     },
     async getUserInfo () {
       const userInfo = await API.getUserInfo()
-      console.log(userInfo)
+      this.userInfo = JSON.parse(userInfo.rawData)
     },
-    clickHandle (msg, ev) {
-      console.log('clickHandle:', msg, ev)
+    async register () {
+      const { encryptedData , iv } = await API.getUserInfo()
+      const cb = await API.register(encryptedData,iv)
+      console.log(cb)
     }
   },
-
-  created () {
+  async mounted () {
     // 调用应用实例的方法获取全局数据
-    this.getUserInfo()
+    await Promise.all([
+      this.getUserInfo(),
+      this.register()
+    ])
   }
 }
 </script>

@@ -13,11 +13,14 @@
     "wechat": "babel-node server/app.js"
   },
   "dependencies": {
+    "bluebird": "^3.5.1",
     "bulma": "^0.7.1",
     "co-wechat": "^2.3.0",
     "co-wechat-oauth": "^2.0.1",
     "echarts": "^4.1.0",
+    "graphql": "^0.13.2",
     "koa": "^2.5.1",
+    "koa-body": "^2.5.0",
     "koa-bodyparser": "^4.2.0",
     "koa-router": "^7.4.0",
     "koa-static": "^4.0.2",

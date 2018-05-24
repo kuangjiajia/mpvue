@@ -1,40 +1,57 @@
 import { userInfo } from "os";
 
 class API {
-    Login() {
-        wx.checkSession({
-            fail: () => { //session_key 已经失效或者没有，需要重新执行登录流程
-                wx.login({
-                    success: (res) => {
-                      wx.request({
-                        url: "https://kuangjiajia.cn/login",
-                        data: {
-                          code: res.code
-                        },
+    launch() {
+        return new Promise((resolve,reject) => {
+            // wx.checkSession({
+                // fail: () => {
+                    wx.login({
                         success: (res) => {
-                          wx.setStorage({
-                            key: "authtoken",
-                            data: res.header.authtoken
-                          })
+                            if(res.code) {
+                                wx.request({
+                                    url: "https://kuangjiajia.cn/login",
+                                    data: {
+                                        code: res.code
+                                    },
+                                    success: (res) => {
+                                        resolve(res)
+                                    }
+                                })
+                            }
                         }
-                      })
-                    }
-                })
-            }
+                    })
+                // }
+            // })
         })
     }
     getUserInfo() {
         return new Promise((resolve,reject) => {
             wx.checkSession({
                 success: res => {
-                    // if (res.authSetting['scope.userInfo']) {
-                        // 已经授权，可以直接调用 getUserInfo 获取头像昵称
-                        wx.getUserInfo({
-                            success: userInfo => {
-                                resolve(userInfo)
-                            }
-                        })
-                    // }
+                    wx.getUserInfo({
+                        success: userInfo => {
+                            resolve(userInfo)
+                        }
+                    })
+                }
+            })
+        })
+    }
+    register (encryptedData,iv) {
+        return new Promise((resolve,reject) => {
+            wx.request({
+                url: "https://kuangjiajia.cn/register",
+                method: "POST",
+                data: {
+                    userName: "kuangjiajia",
+                    encryptedData: encryptedData,
+                    iv: iv
+                },
+                header: {
+                    "authtokens": wx.getStorageSync("authtokens"),
+                },
+                success: res => {
+                    resolve(res)
                 }
             })
         })

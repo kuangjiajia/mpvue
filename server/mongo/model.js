@@ -1,4 +1,5 @@
+import { createNewUser } from './Schema/user.js'
 
-export default {
-
+export {
+    createNewUser
 }
