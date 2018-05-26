@@ -37,15 +37,31 @@ class API {
             })
         })
     }
-    register (encryptedData,iv) {
+    register (encryptedData,iv,username) {
         return new Promise((resolve,reject) => {
             wx.request({
                 url: "https://kuangjiajia.cn/register",
                 method: "POST",
                 data: {
-                    userName: "kuangjiajia",
                     encryptedData: encryptedData,
-                    iv: iv
+                    iv: iv,
+                    username: username
+                },
+                header: {
+                    "authtokens": wx.getStorageSync("authtokens"),
+                },
+                success: res => {
+                    resolve(res)
+                }
+            })
+        })
+    }
+    getWeather () {
+        return new Promise((resolve,reject) => {
+            wx.request({
+                url: "https://kuangjiajia.cn/getweather",
+                data: {
+                    city: "泸州"
                 },
                 header: {
                     "authtokens": wx.getStorageSync("authtokens"),

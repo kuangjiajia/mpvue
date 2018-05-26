@@ -5,6 +5,7 @@ import mongoose from '../mongo'
 import { createNewUser } from '../mongo/model.js'
 import { formatUrl , decodeData } from '../config'
 import redis from '../redis'
+import weather from '../config/city.json'
 
 export default {
     login: async (ctx,next) => {
@@ -20,14 +21,30 @@ export default {
         }
     },
     register: async (ctx,next) => {
-        const { authtokens  } = ctx.request.header
-        const { userName , encryptedData , iv} = ctx.request.body
+        const { authtokens } = ctx.request.header
+        const { username , encryptedData , iv} = ctx.request.body
         const { openid , session_key} = JSON.parse(await redis.get(authtokens))
-        const userInfo = decodeData(encryptedData,iv,session_key)
-        createNewUser({openid,userInfo})
-        ctx.body = {
-            mes: "success",
-            code: 1
+        const userInfor = decodeData(encryptedData,iv,session_key)
+        const info = await createNewUser({ openid ,userInfor , username}) //用户信息入库
+        ctx.set("authtokens",authtokens)
+        if(parseInt(info) === 0) {
+            ctx.body = {
+                mes: "注册成功",
+                code: 0  
+            }
+        }else if(parseInt(info) === 1) {
+            ctx.body = {
+                mes: "该用户已存在",
+                code: 1
+            }
         }
+    },
+    getweather: async (ctx,next) => {
+        const { city } = ctx.query
+        const { authtokens } = ctx.request.header 
+        const cityCode = weather.filter(i => i.name === city)[0].id
+        const cityWeather = rp(`http://tj.nineton.cn/Heart/index/all?city=${cityCode}`)
+        ctx.set("authtokens",authtokens)
+        ctx.body = cityWeather
     }
 }

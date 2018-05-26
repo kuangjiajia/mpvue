@@ -4,8 +4,9 @@
     img.user-avatar(v-if='userInfo.avatarUrl' :src='userInfo.avatarUrl')
     .card-input
       i
-      input.school(type='text' placeholder="用户名称") 
-      button(@click='getHaha') 注册
+      input.school(type='text' placeholder="用户名称" @change="usernameChange" :value="username") 
+      h2 {{warnText}}
+      button(@click='userRegister') 注册
       button(open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo") 授权登录
 
 </template>
@@ -44,6 +45,10 @@
       border-radius 5vw
       font-size 16px
       color black
+    h2 
+      padding .5vh 0 0 10vw
+      font-size 14px
+      color red
     button
       width 84vw
       height 11vw
@@ -65,7 +70,9 @@ import API from '../../api'
 export default {
   data () {
     return {
-      userInfo: {}
+      userInfo: {},
+      username: "",
+      warnText: ""
     }
   },
 
@@ -75,28 +82,34 @@ export default {
 
   methods: {
     bindViewTap () {
-      const url = '../logs/main'
+      const url = '../index/main'
       wx.navigateTo({ url })
     },
-    getHaha () {
-      console.log(123)
+    usernameChange(e) {
+      this.username = e.target.value
     },
     async getUserInfo () {
       const userInfo = await API.getUserInfo()
       this.userInfo = JSON.parse(userInfo.rawData)
+      console.log(userInfo)
+      wx.setStorageSync("userInfo",userInfo)
     },
-    async register () {
-      const { encryptedData , iv } = await API.getUserInfo()
-      const cb = await API.register(encryptedData,iv)
-      console.log(cb)
+    async userRegister () {
+      const { encryptedData , iv } = wx.getStorageSync("userInfo")
+      console.log(wx.getStorageSync("userInfo"))
+      const username = this.username
+      const res = await API.register(encryptedData,iv,username)
+      if(res.data.code === 0) {
+        console.log("注册成功")
+        this.bindViewTap()
+      }else if(res.data.code === 1) {
+        this.warnText = res.data.mes
+      }
     }
   },
   async mounted () {
     // 调用应用实例的方法获取全局数据
-    await Promise.all([
-      this.getUserInfo(),
-      this.register()
-    ])
+      await this.getUserInfo()
   }
 }
 </script>
