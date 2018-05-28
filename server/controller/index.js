@@ -6,6 +6,7 @@ import { createNewUser } from '../mongo/model.js'
 import { formatUrl , decodeData } from '../config'
 import redis from '../redis'
 import weather from '../config/city.json'
+import md5 from 'md5'
 
 export default {
     login: async (ctx,next) => {
@@ -46,5 +47,12 @@ export default {
         const cityWeather = rp(`http://tj.nineton.cn/Heart/index/all?city=${cityCode}`)
         ctx.set("authtokens",authtokens)
         ctx.body = cityWeather
+    },
+    test: async (ctx,next) => {
+        const arr = []
+        for(var i = 0 ; i < 50 ; i++) {
+            arr.push(md5("kuangjaasda"+i))
+        }
+        ctx.body = arr
     }
 }

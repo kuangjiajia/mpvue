@@ -1,13 +1,13 @@
 <template lang="pug">
   .containers
-    h1.city {{weather.city_name}}
-    h2.weather {{weather.now.text}}
-    h1.temperature {{}}°
+    h1.city {{todayWeather.city_name}}
+    h2.weather {{todayWeather.text}}
+    h1.temperature {{todayWeather.temperature}}
     ul.date
       li(v-for="(day,index) in dayList" :key="day.date")
         span {{day.date }}
         img(v-bind:src="day.weather")
-        span {{day.temprature + '°'}}
+        span {{day.temperature + '°'}}
     .echarts
       echartsDemo
     ul.day-do
@@ -19,17 +19,18 @@
 import '../../static/stylus/index.styl'
 import todo from '../../components/todo.vue'
 import todoList from '../../components/todoList.vue'
-import {dayList, itemList} from '../../config/index.js'
+import { itemList , getMes } from '../../config'
 import echartsDemo from '../../components/echarts.vue'
 import note from '../../components/note.vue'
 import API from '../../api'
 
+
 export default {
   data () {
     return {
-      dayList,
-      itemList,
-      weather: {}
+      dayList: [],
+      itemList: [],
+      todayWeather: {}
     }
   },
   components: {
@@ -43,9 +44,11 @@ export default {
 
     },
     async getWeather() {
-      const res = await API.getWeather()
-      this.weather = res.data.weather[0]
-      console.log(this.weather.now.text)
+      const { dayList, todayWeather} = await getMes()
+      this.dayList = dayList
+      console.log(dayList)
+      wx.setStorageSync("dayList",dayList)
+      this.todayWeather = todayWeather
     }
   },
   onLoad: () => {
@@ -53,8 +56,8 @@ export default {
   created () {
     // 调用应用实例的方法获取全局数据
   },
-  mounted () {
-    this.getWeather()    
+  async mounted () {
+    await this.getWeather()
   }
 }
 </script>

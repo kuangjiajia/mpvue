@@ -4,7 +4,7 @@
     img.user-avatar(v-if='userInfo.avatarUrl' :src='userInfo.avatarUrl')
     .card-input
       i
-      input.school(type='text' placeholder="用户名称" @change="usernameChange" :value="username") 
+      input.school(type='text' placeholder="用户名称" v-model="username") 
       h2 {{warnText}}
       button(@click='userRegister') 注册
       button(open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo") 授权登录
@@ -84,9 +84,6 @@ export default {
     bindViewTap () {
       const url = '../index/main'
       wx.navigateTo({ url })
-    },
-    usernameChange(e) {
-      this.username = e.target.value
     },
     async getUserInfo () {
       const userInfo = await API.getUserInfo()

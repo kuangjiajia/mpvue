@@ -1,13 +1,13 @@
 <template lang="pug">
-.add-todo 
-  textarea(cols="10" rows="10" placeholder="您想做什么" fixed=true)
-  i.del
-  i.choose
-  picker(@change="bindPickerChange" mode="time" :value="index" :range="array")
-    view.picker 选择时间：{{publishTime}}
+  div(:class="addTodoStyle")
+    textarea(cols="10" rows="10" placeholder="您想做什么" fixed=true v-model="neverForget" focus=true)
+    i.del(@click="clickCloseAddTodo")
+    i.choose
+    picker(@change="bindPickerChange" mode="time" :value="index" :range="array")
+      view.picker 选择时间：{{publishTime}}
 </template>
 <style lang="stylus" scoped>
-  .add-todo 
+  .add-todo
     position absolute 
     top 0
     bottom 0
@@ -41,23 +41,42 @@
       height 10vw
       background url("../static/img/true.png")
       background-size 100% 100%
-        
+  .hideAddTodo    
+    display none
 
 </style>
 <script>
+import { mapState , mapMutations } from 'vuex'
   export default {
   data () {
     return {
       index: 0,
-      publishTime: 0
+      publishTime: 0,
+      neverForget: ""
+    }
+  },
+  props:{
+    isaddTodo: Boolean
+  },
+  computed: {
+    addTodoStyle: function() {
+      return this.isaddTodo ? "add-todo" : ""
     }
   },
   methods: {
     bindPickerChange (e) {
       this.publishTime = e.target.value
-    }
+    },
+    clickCloseAddTodo () {
+      this.$emit('addTodoClick')
+    },
+    ...mapMutations([
+      'editTodo',
+      'toggleTodo',
+      'deleteTodo'
+    ]),
   },
-  mounted() {
+  mounted: function() {
 
   }
   }

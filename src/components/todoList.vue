@@ -1,30 +1,30 @@
 <template lang="pug">
-    li(@click="todoClick" v-bind:class="[isActive ? 'clickTodo' : 'todolist']")
-      h3 {{todoListData.title}}
+    li(:class="[isActive ? 'clickTodo' : 'todolist']")
+      h3(@click="todoClick" ) {{todoListData.title}}
       ul.content
         h2 
           span Today
           i 
-        li(v-for="(itemTip,index1) in todoListData.todo")
+        li(v-for="(itemTip,index1) in todoListData.todo" :key="index1")
           i 
           span {{itemTip}}
       ul.content
         h2 
           span Tomorrow
           i
-        li(v-for="(itemTip,index1) in todoListData.todo")
+        li(v-for="(itemTip,index1) in todoListData.todo" :key="index1")
           i 
           span {{itemTip}}
       ul.content
         h2 
           span Later
           i
-        li(v-for="(itemTip,index1) in todoListData.todo")
+        li(v-for="(itemTip,index1) in todoListData.todo" :key="index1")
           i 
           span {{itemTip}}
-      i.add-icon
+      i.add-icon(@click="addTodoClick")
       i.close-icon
-      //- addTodo
+      addTodo(:isaddTodo="addTodo" @addTodoClick="addTodoClick")
       //- oneDay
 
 </template>
@@ -33,7 +33,7 @@
 li
   position relative
   overflow hidden
-  // transition all 1s ease
+  transition all 1s ease
   &.todolist
     margin 8vh auto
     width 80vw
@@ -67,7 +67,7 @@ li
   ul.content
     width 80vw
     height 22vh
-    margin 1.2vh auto
+    margin 2vh auto
     li 
       height 5vh
       line-height 5vh
@@ -108,24 +108,32 @@ li
       height 4vh
       background url("../static/img/close.png")
       background-size 100% 100%
+  .showTodo
+     display block
+  .hideTodo
+    display none
 </style>
 
 <script>
 import addTodo from './addTodo.vue'
 import oneDay from './oneDay.vue'
 import {itemList} from '../config/index.js'
+
 export default {
   data() {
     return {
       todoListData: itemList[0],
-      isActive: false
+      isActive: false,
+      addTodo: false
     }
   },
   methods: {
-    // todoClick() {
-    //   this.isActive = this.isActive ?  false : true
-    //   console.log(123)
-    // }
+    todoClick() {
+      this.isActive = !this.isActive
+    },
+    addTodoClick() {
+      this.addTodo = !this.addTodo
+    }
   },
   components: {
     addTodo,

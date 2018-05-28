@@ -2,7 +2,7 @@
     li(@click="todoClick" v-bind:class="[isActive ? 'clickTodo' : 'todolist']")
       h3 随笔
       ul.content
-        li(v-for="(itemTip,index1) in todoListData.todo")
+        li(v-for="(itemTip,index1) in todoListData.todo" :key="index1")
           i 
           span {{itemTip}}
       i.add-icon

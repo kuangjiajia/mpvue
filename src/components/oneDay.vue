@@ -4,12 +4,12 @@
 	i.del
 	ul.finish 
 		h2 已完成
-		li(v-for="(item,index) in finishData")
+		li(v-for="(item,index) in finishData" :key="index")
 			icon(type="cancel" size="20" color="black") 
 			span {{item.data}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{item.time}}
 	ul.unfinish
 		h2 未完成
-		li(v-for="(item,index) in unfinishData")
+		li(v-for="(item,index) in unfinishData" :key="index")
 			icon(type="success" size="20" color="black") 
 			span {{item.data}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{item.time}}
 </template>

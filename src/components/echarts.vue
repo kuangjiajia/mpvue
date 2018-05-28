@@ -6,14 +6,14 @@
 <script>
 import echarts from 'echarts'
 import mpvueEcharts from 'mpvue-echarts'
-import { dayList } from '../config/index.js'
 let chart = null;
+const dayList = wx.getStorageSync("dayList")
 const xAxisData = dayList.map(item => {
     return item.date
 })
 
 const seriesData = dayList.map(item => {
-    return item.temprature
+    return item.temperature
 })
 
 function initChart(canvas, width, height) {
@@ -53,6 +53,9 @@ function initChart(canvas, width, height) {
 export default {
   components: {
     mpvueEcharts
+  },
+  props: {
+    dayList: Array
   },
   data () {
     return {

@@ -1,42 +1,48 @@
-export const dayList = [
-  {
-    date: '今天',
-    weather: require('../static/img/sun.png'),
-    temprature: 20
-  },
-  {
-    date: 21,
-    weather: require('../static/img/cloudy.png'),
-    temprature: 22
-  },
-  {
-    date: 22,
-    weather: require('../static/img/fog.png'),
-    temprature: 25
-  },
-  {
-    date: 23,
-    weather: require('../static/img/rain.png'),
-    temprature: 23
-  },
-  {
-    date: 24,
-    weather: require('../static/img/sandstorm.png'),
-    temprature: 14
-  },
-  {
-    date: 25,
-    weather: require('../static/img/thunder.png'),
-    temprature: 25
-  },
-  {
-    date: 26,
-    weather: require('../static/img/snow.png'),
-    temprature: 35
-  }
-]
+import API from '../api'
 
-export const itemList = [
+const getMes = async () => {
+  const res = (await API.getWeather()).data.weather[0]
+  console.log(res)
+  const todayWeather = res.now
+  todayWeather.city_name = res.city_name
+  console.log(todayWeather)
+  const dayList = res.future.map((item,index) => {
+    if(index < 7) {
+      if(index === 0) {
+        item.date = "今天"
+      }else {
+        item.date = item.date.slice(-2)
+      }
+      item.temperature = parseInt((parseInt(item.high)+parseInt(item.low))/2)
+      item.weather = getWeatherImg(item)
+      return item    
+    }
+  }).filter(item => item !== undefined)
+  console.log(todayWeather.temperature)
+  return { todayWeather , dayList }
+}
+
+
+const getWeatherImg = (item) => {
+  if(item.text.indexOf("雷") !== -1) {
+    console.log("asdasdas")
+    return require('../static/img/thunder.png')
+  }else if(item.text.indexOf("雨") !== -1) {
+    return require('../static/img/rain.png')
+  }else if(item.text.indexOf("云") !== -1) {
+    return require('../static/img/cloudy.png')
+  }else if(item.text.indexOf("雾") !== -1) {
+    return require('../static/img/fog.png')
+  }else if(item.text.indexOf("卷") !== -1) {
+    return require('../static/img/sandstorm.png')
+  }else if(item.text.indexOf("雪") !== -1) {
+    return require('../static/img/snow.png')
+  }else {
+    return require('../static/img/sun.png')
+  }
+}
+
+const itemList = [
   {
     title: '备忘录',
     className: 'todo-item',
@@ -54,7 +60,8 @@ export const itemList = [
 	}
 ]
 
-export const noteBook = [
+
+const noteBook = [
   {
     title: '我爱你',
     content: "那死的哈是的话i啊是的"
@@ -69,3 +76,10 @@ export const noteBook = [
   },
 ]
 
+
+
+export {
+  getMes,
+  itemList,
+  noteBook
+}
