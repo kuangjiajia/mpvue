@@ -7,7 +7,6 @@
       input.school(type='text' placeholder="用户名称" v-model="username") 
       h2 {{warnText}}
       button(@click='userRegister') 注册
-      button(open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo") 授权登录
 
 </template>
 
@@ -85,15 +84,8 @@ export default {
       const url = '../index/main'
       wx.navigateTo({ url })
     },
-    async getUserInfo () {
-      const userInfo = await API.getUserInfo()
-      this.userInfo = JSON.parse(userInfo.rawData)
-      console.log(userInfo)
-      wx.setStorageSync("userInfo",userInfo)
-    },
     async userRegister () {
       const { encryptedData , iv } = wx.getStorageSync("userInfo")
-      console.log(wx.getStorageSync("userInfo"))
       const username = this.username
       const res = await API.register(encryptedData,iv,username)
       if(res.data.code === 0) {
@@ -104,9 +96,9 @@ export default {
       }
     }
   },
-  async mounted () {
+  mounted () {
     // 调用应用实例的方法获取全局数据
-      await this.getUserInfo()
+      console.log(1232123123)
   }
 }
 </script>

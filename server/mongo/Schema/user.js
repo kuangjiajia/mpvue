@@ -21,7 +21,7 @@ const updateUser = async ({openid,userInfor,username}) => {
         await user.save()
     }else {
         user.userInfor = userInfor
-        user = await user.save()
+        await user.save()
     }
 }
 

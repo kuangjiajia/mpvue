@@ -1,9 +1,13 @@
+import Vue from 'vue'
+import todo from './modules/todolist'
+import article from './modules/article'
 import Vuex from 'vuex'
-import todolist from './modules/todolist'
 
+Vue.use(Vuex)
 
 export default new Vuex.Store({
     modules: {
-        todolist
-    },
+        todo,
+        article
+    }
 })

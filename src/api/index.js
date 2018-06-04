@@ -72,6 +72,93 @@ class API {
             })
         })
     }
+    insertTodo (content) {
+        return new Promise((resolve,reject) => {
+            wx.request({
+                url: "https://kuangjiajia.cn/insertTodo",
+                method: "POST",
+                data: {
+                    content: content
+                },
+                header: {
+                    "authtokens": wx.getStorageSync("authtokens"),
+                },
+                success: res => {
+                    resolve(res)
+                }
+            })
+        })
+    }
+    updateTodo (content) {
+        return new Promise((resolve,reject) => {
+            wx.request({
+                url: "https://kuangjiajia.cn/updateTodo",
+                method: "POST",
+                data: {
+                    content: content
+                },
+                header: {
+                    "authtokens": wx.getStorageSync("authtokens"),
+                },
+                success: res => {
+                    resolve(res)
+                }
+            })
+        })
+    }
+    removeTodo (id) {
+        return new Promise((resolve,reject) => {
+            wx.request({
+                url: "https://kuangjiajia.cn/removeTodo",
+                method: "POST",
+                data: {
+                    content: {
+                        id: id
+                    }
+                },
+                header: {
+                    "authtokens": wx.getStorageSync("authtokens"),
+                },
+                success: res => {
+                    resolve(res)
+                }
+            })
+        })  
+    }
+    addArticle (content) {
+        return new Promise((resolve,reject) => {
+            wx.request({
+                url: "https://kuangjiajia.cn/insertArticle",
+                method: "POST",
+                data: {
+                    content: content
+                },
+                header: {
+                    "authtokens": wx.getStorageSync("authtokens"),
+                },
+                success: res => {
+                    resolve(res)
+                }
+            })
+        })
+    }
+    updateArticle (content) {
+        return new Promise((resolve,reject) => {
+            wx.request({
+                url: "https://kuangjiajia.cn/updateArticle",
+                method: "POST",
+                data: {
+                    content: content
+                },
+                header: {
+                    "authtokens": wx.getStorageSync("authtokens"),
+                },
+                success: res => {
+                    resolve(res)
+                }
+            })
+        })
+    }
 }
 
 export default new API()

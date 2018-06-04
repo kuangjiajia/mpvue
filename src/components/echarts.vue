@@ -4,10 +4,10 @@
 </template>
 
 <script>
-import echarts from 'echarts'
 import mpvueEcharts from 'mpvue-echarts'
+import echarts from 'echarts'
 let chart = null;
-const dayList = wx.getStorageSync("dayList")
+const dayList = wx.getStorageSync("dayList") || []
 const xAxisData = dayList.map(item => {
     return item.date
 })

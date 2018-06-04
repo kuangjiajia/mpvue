@@ -1,12 +1,17 @@
-//npm的
 import rp from 'request-promise'
-//自身定义
 import mongoose from '../mongo'
-import { createNewUser } from '../mongo/model.js'
-import { formatUrl , decodeData } from '../config'
 import redis from '../redis'
 import weather from '../config/city.json'
 import md5 from 'md5'
+import { formatUrl , decodeData } from '../config'
+import { createNewUser,
+         updateUser,
+         insertArticle,
+         updateArticle,
+         insertTodo,
+         updateTodo,
+         removeTodo } from '../mongo/model.js'
+
 
 export default {
     login: async (ctx,next) => {
@@ -48,11 +53,54 @@ export default {
         ctx.set("authtokens",authtokens)
         ctx.body = cityWeather
     },
-    test: async (ctx,next) => {
-        const arr = []
-        for(var i = 0 ; i < 50 ; i++) {
-            arr.push(md5("kuangjaasda"+i))
+    insertTodo: async (ctx,next) => {
+        const { authtokens } = ctx.request.header
+        const { content } = ctx.request.body
+        const { openid } = JSON.parse(await redis.get(authtokens))
+        const info = await insertTodo({openid,content})
+        ctx.body = {
+            mes: "插入成功啊！",
+            code: 0
         }
-        ctx.body = arr
+    },
+    updateTodo: async (ctx,next) => {
+        const { authtokens } = ctx.request.header
+        const { content } = ctx.request.body
+        const { openid } = JSON.parse(await redis.get(authtokens))
+        const info = await updateTodo({openid,content})
+        ctx.body = {
+            mes: "更新成功啊！",
+            code: 0
+        }
+    },
+    removeTodo: async (ctx,next) => {
+        const { authtokens } = ctx.request.header
+        const { content } = ctx.request.body
+        const { openid } = JSON.parse(await redis.get(authtokens))
+        const info = await removeTodo({openid,content})
+        ctx.body = {
+            mes: "删除成功啊！",
+            code: 0
+        }
+    },
+    insertArticle: async (ctx,next) => {
+        const { authtokens } = ctx.request.header
+        const { content } = ctx.request.body
+        const { openid } = JSON.parse(await redis.get(authtokens))
+        const info = await insertArticle({openid,content})
+        ctx.body = {
+            mes: "插入成功",
+            code: 0
+        }
+    },
+    updateArticle: async (ctx,next) => {
+        const { authtokens } = ctx.request.header
+        const { content } = ctx.request.body
+        const { openid } = JSON.parse(await redis.get(authtokens))
+        const info = await updateArticle({openid,content})
+        ctx.body = {
+            mes: "更新成功",
+            code: 0
+        }
     }
 }

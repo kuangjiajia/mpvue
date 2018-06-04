@@ -42,6 +42,29 @@ const getWeatherImg = (item) => {
   }
 }
 
+
+const getDayType = (time) => {
+  const nowDayTimeStamp = new Date().getTime()
+  const timeStamp = new Date(time).getTime()
+  const tomorrowTimeStamp = new Date(new Date().toLocaleDateString()).getTime() + 86400000
+  if(timeStamp < nowDayTimeStamp) {
+    return "Previous"
+  }else if(timeStamp < tomorrowTimeStamp){
+    return "Today"
+  }else if(timeStamp < tomorrowTimeStamp + 86400000) {
+    return "Tomorrow"
+  }else {
+    return "Future"
+  }
+}
+
+const getTypeTodo = (state,type) => {
+  return state.filter(item => {
+    return getDayType(`${item.publishDate} ${item.publishTime}:00`) === type
+  })
+}
+
+
 const itemList = [
   {
     title: '备忘录',
@@ -77,9 +100,23 @@ const noteBook = [
 ]
 
 
+const getDateNow = () =>  {
+  const myDate = new Date()
+  const year = myDate.getFullYear()
+  const month = myDate.getMonth() + 1
+  const day = myDate.getDate()
+  const hour = myDate.getHours() < 10 ? `0${myDate.getHours()}` : myDate.getHours()
+  const minute = myDate.getMinutes() < 10 ? `0${myDate.getMinutes()}` : myDate.getMinutes()
+  const seconds = myDate.getSeconds() < 10 ? `0${myDate.getSeconds()}` : myDate.getSeconds()
+  return `${year}-${month}-${day} ${hour}:${minute}:${seconds}`
+}
+
 
 export {
   getMes,
   itemList,
-  noteBook
+  noteBook,
+  getDayType,
+  getTypeTodo,
+  getDateNow
 }

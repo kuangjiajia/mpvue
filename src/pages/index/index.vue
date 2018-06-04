@@ -12,16 +12,15 @@
       echartsDemo
     ul.day-do
       todoList
-      //- note
+      articleList
 </template>
 
 <script>
 import '../../static/stylus/index.styl'
-import todo from '../../components/todo.vue'
-import todoList from '../../components/todoList.vue'
+import todoList from '../../components/todo/todoList.vue'
 import { itemList , getMes } from '../../config'
 import echartsDemo from '../../components/echarts.vue'
-import note from '../../components/note.vue'
+import articleList from '../../components/article/articleList.vue'
 import API from '../../api'
 
 
@@ -34,30 +33,36 @@ export default {
     }
   },
   components: {
-    todo,
     echartsDemo,
     todoList,
-    note
+    articleList
   },
   methods: {
     todoClick() {
 
     },
-    async getWeather() {
-      const { dayList, todayWeather} = await getMes()
-      this.dayList = dayList
-      console.log(dayList)
-      wx.setStorageSync("dayList",dayList)
-      this.todayWeather = todayWeather
-    }
+    // async getWeather() {
+    //   const { dayList, todayWeather} = await getMes()
+    //   this.dayList = dayList
+    //   console.log(dayList)
+    //   wx.setStorageSync("dayList",dayList)
+    //   wx.setStorageSync("todayWeather",todayWeather)
+    //   this.todayWeather = todayWeather
+    // }
   },
-  onLoad: () => {
+  onLoad() {
+
   },
-  created () {
+  async beforeCreate () {
     // 调用应用实例的方法获取全局数据
+      const { dayList, todayWeather} = await getMes()
+      wx.setStorageSync("dayList",dayList)
+      wx.setStorageSync("todayWeather",todayWeather)
   },
-  async mounted () {
-    await this.getWeather()
-  }
+  mounted () {
+    // this.getWeather()
+      this.dayList = wx.getStorageSync("dayList")
+      this.todayWeather = wx.getStorageSync("todayWeather")
+}
 }
 </script>
